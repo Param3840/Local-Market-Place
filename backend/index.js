@@ -15,13 +15,13 @@ const server = http.createServer(app);
 
 // ✅ Dynamic CORS origins from .env
 const allowedOrigins = process.env.CLIENT_ORIGIN
-  ? process.env.CLIENT_ORIGIN.split(",").map(origin => origin.replace(/\/$/, ""))
+  ? process.env.CLIENT_ORIGIN.split(",").map(origin => origin.trim().replace(/\/$/, ""))
   : [];
 
 const corsOptions = {
   origin: function (origin, callback) {
     const cleanOrigin = origin?.replace(/\/$/, "");
-    console.log("🌐 Express CORS origin:", cleanOrigin);
+    console.log("🌐 Express CORS origin:", cleanOrigin || "NO ORIGIN");
     if (!cleanOrigin || allowedOrigins.includes(cleanOrigin)) {
       callback(null, true);
     } else {
@@ -45,7 +45,7 @@ const io = new Server(server, {
   cors: {
     origin: function (origin, callback) {
       const cleanOrigin = origin?.replace(/\/$/, "");
-      console.log("🌐 Socket.IO CORS origin:", cleanOrigin);
+      console.log("🌐 Socket.IO CORS origin:", cleanOrigin || "NO ORIGIN");
       if (!cleanOrigin || allowedOrigins.includes(cleanOrigin)) {
         callback(null, true);
       } else {
@@ -157,15 +157,6 @@ app.use("/api/messages", require("./routes/messageRoutes"));
 app.use("/api", (req, res) => {
   res.status(404).json({ error: "API route not found" });
 });
-
-// ✅ Serve frontend in production
-if (process.env.NODE_ENV === "production") {
-  const frontendPath = path.join(__dirname, "../frontend/dist");
-  app.use(express.static(frontendPath));
-  app.get(/^\/(?!api).*/, (req, res) => {
-    res.sendFile(path.join(frontendPath, "index.html"));
-  });
-}
 
 // ✅ Start server
 const PORT = process.env.PORT || 5000;
