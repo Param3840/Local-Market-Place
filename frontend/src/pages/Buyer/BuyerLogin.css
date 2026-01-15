@@ -1,0 +1,119 @@
+.buyer-login-screen {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+.buyer-background-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2px);
+  z-index: 0;
+}
+
+.buyer-foreground-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+  color: #fff;
+}
+
+.buyer-login-box {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.buyer-login-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.buyer-login-subtitle {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #2F2F2F;
+}
+
+.buyer-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.buyer-login-form input {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: none;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  color: #000;
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.25),
+              inset 2px 2px 4px rgba(255, 255, 255, 0.25),
+              0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.buyer-login-form input::placeholder {
+  color: #555;
+}
+
+.buyer-login-form button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15); /* semi-transparent glass */
+  backdrop-filter: blur(6px);
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.25),
+              inset 2px 2px 4px rgba(255, 255, 255, 0.25),
+              0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.buyer-login-form button:hover {
+  background: #4e2120;
+  color: #fff;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+}
+
+.buyer-signup-link {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #2F2F2F;
+}
+
+.buyer-signup-link a {
+  color: #4e2120;
+  text-decoration: none;
+  font-weight: 600;
+}
+.seller-login-link {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #2F2F2F;
+}
+
+.seller-login-link a {
+  color: #4e2120;
+  text-decoration: none;
+  font-weight: 600;
+}
+

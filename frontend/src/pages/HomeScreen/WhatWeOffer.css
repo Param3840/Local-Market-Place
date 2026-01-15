@@ -1,0 +1,105 @@
+.offer-section {
+  background: transparent;
+  padding: 4rem 2rem;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  border-radius: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: #000000 !important;
+  text-shadow: 0px 1px 2px rgba(255, 255, 255, 0.3); 
+}
+
+.card-layout {
+  top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  padding-bottom: 4rem;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+/* Card Style */
+.card {
+  width: clamp(180px, 22vw, 220px);
+  height: clamp(180px, 22vw, 220px);
+ background: rgba(253, 253, 253, 0.1); 
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  color: #2F2F2F;
+  transform-origin: center;
+  position: relative;
+  margin-left: -60px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* First Card Fix */
+.card:first-child {
+  margin-left: 0;
+}
+
+/* Active Card */
+.card.active {
+  background-color: #4e2120;
+  color: #e9ca48;
+  height: auto;
+  min-height: 280px;
+  padding: 2rem;
+  transform: scale(1.05) rotate(0deg);
+  z-index: 10;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+}
+
+/* Title */
+.card-title {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Content */
+.card-content {
+  margin-top: 1rem;
+  font-size: clamp(0.9rem, 1.8vw, 1rem);
+  line-height: 1.6;
+}
+
+/* Responsive: 2x2 Grid */
+@media (max-width: 768px) {
+  .card-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 2rem;
+    justify-content: center;
+  }
+
+  .card { 
+    margin-left: 0 !important;
+    transform: none !important;
+    width: 100%;
+    height: auto;
+  }
+
+  .card.active {
+    transform: scale(1.05);
+  }
+}

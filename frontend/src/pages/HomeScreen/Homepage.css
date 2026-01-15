@@ -1,0 +1,178 @@
+.home-screen {
+  position: relative;
+  min-height: 100vh;
+  background: url('../../assets/bg.png') no-repeat center center;
+  background-size: cover;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+  padding-top: 80px;
+}
+
+/* ✅ Blurred overlay */
+.background-blur {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(1px);
+  /* background-color: rgba(233, 202, 72, 0.4);  */
+  z-index: 0;
+}
+
+/* ✅ Content stays clear */
+.foreground-content {
+  position: relative;
+  z-index: 1;
+  color: #2F2F2F;
+}
+
+
+/* Hero Section with Image */
+.hero-section {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  padding: 2rem 4rem;
+  /* gap: 2rem; */
+  flex-wrap: wrap; /* ✅ helps tablet wrap */
+}
+
+/* Left Content */
+.hero-content {
+  /* flex: 1; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Title Text */
+.hero-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: 96px;
+  line-height: 112px;
+  font-weight: 400;
+  color: #2F2F2F;
+  margin-bottom: 1rem;
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: 20px;
+  margin-bottom: 2rem;
+   color: #2F2F2F;
+}
+
+/* CTA Buttons */
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.btn-buyer,
+.btn-seller {
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: none;
+  background: rgba(253, 35, 35, 0.05); /* ✅ glassy base */
+  color: #000000;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px); /* ✅ blur effect */
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.25),
+              inset 2px 2px 4px rgba(255, 255, 255, 0.25),
+              0px 7px 7.3px rgba(0, 0, 0, 0.25);
+                transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-buyer:hover,
+.btn-seller:hover {
+  background-color: #4e2120; /* ✅ your hover color */
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Right Side Image */
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20px;
+}
+
+.hero-img {
+  width: 80%;
+  max-width: 400px;
+  height: auto;
+  object-fit: contain;
+}
+section {
+  scroll-margin-top: 100px;
+  scroll-behavior: smooth;
+}
+/* Tablet View */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 72px;
+    line-height: 90px;
+  }
+
+  .cta-buttons {
+    justify-content: center;
+  }
+
+  .hero-img {
+    max-width: 320px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero-content {
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: 48px;
+    line-height: 60px;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .cta-buttons {
+    justify-content: center;
+  }
+
+  .btn-buyer,
+  .btn-seller {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .hero-image {
+    margin-bottom: 2rem;
+    padding-top: 0;
+    align-items: center;
+  }
+
+  .hero-img {
+    width: 100%;
+    max-width: 280px;
+  }
+}
