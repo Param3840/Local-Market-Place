@@ -15,16 +15,18 @@ const server = http.createServer(app);
 
 // ✅ Dynamic CORS origins from .env
 const allowedOrigins = process.env.CLIENT_ORIGIN
-  ? process.env.CLIENT_ORIGIN.split(",")
+  ? process.env.CLIENT_ORIGIN.split(",").map(origin => origin.replace(/\/$/, ""))
   : [];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    const cleanOrigin = origin?.replace(/\/$/, "");
+    console.log("🌐 Express CORS origin:", cleanOrigin);
+    if (!cleanOrigin || allowedOrigins.includes(cleanOrigin)) {
       callback(null, true);
     } else {
-      console.warn("❌ Blocked by CORS:", origin);
-      callback(new Error("Not allowed by CORS: " + origin));
+      console.warn("❌ Blocked by CORS:", cleanOrigin);
+      callback(new Error("Not allowed by CORS: " + cleanOrigin));
     }
   },
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -42,10 +44,12 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const io = new Server(server, {
   cors: {
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      const cleanOrigin = origin?.replace(/\/$/, "");
+      console.log("🌐 Socket.IO CORS origin:", cleanOrigin);
+      if (!cleanOrigin || allowedOrigins.includes(cleanOrigin)) {
         callback(null, true);
       } else {
-        console.warn("❌ Socket.io CORS blocked:", origin);
+        console.warn("❌ Socket.IO CORS blocked:", cleanOrigin);
         callback(new Error("Not allowed by CORS"));
       }
     },
@@ -159,8 +163,8 @@ if (process.env.NODE_ENV === "production") {
   const frontendPath = path.join(__dirname, "../frontend/dist");
   app.use(express.static(frontendPath));
   app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
-});
+    res.sendFile(path.join(frontendPath, "index.html"));
+  });
 }
 
 // ✅ Start server
