@@ -1,9 +1,11 @@
+// src/api.js
+
 import axios from "axios";
 
-// ✅ Automatically switch between dev and prod
+// ✅ Create axios instance with dynamic base URL
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE || "http://192.168.1.44:5000/api",
-  withCredentials: true,
+  baseURL: import.meta.env.VITE_API_BASE, // Set in .env file
+  withCredentials: true, // Send cookies with requests
 });
 
 export default api;
