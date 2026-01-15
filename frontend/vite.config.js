@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://192.168.1.44:5000', // ✅ Use your laptop's IP here
+        target: 'https://local-market-place.onrender.com', 
         changeOrigin: true,
         secure: false,
       },
