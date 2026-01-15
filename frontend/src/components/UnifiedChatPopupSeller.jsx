@@ -25,7 +25,7 @@ export default function UnifiedChatPopupSeller({
 
   useEffect(() => {
     if (!selectedChat && showChatList) {
-      api.get(`/conversations/seller/${sellerId}`).then((res) => {
+      api.get(`/api/conversations/seller/${sellerId}`).then((res) => {
         setConversations(res.data);
       });
     }
@@ -44,21 +44,21 @@ export default function UnifiedChatPopupSeller({
     async function setupChat() {
       try {
         if (productId) {
-          const productRes = await api.get(`/products/${productId}`);
+          const productRes = await api.get(`/api/products/${productId}`);
           setProductName(productRes.data.name || "Product");
         } else {
           setProductName("General Chat");
         }
 
         if (buyerId) {
-          const userRes = await api.get(`/users/${buyerId}`);
+          const userRes = await api.get(`/api/users/${buyerId}`);
           setUserName(userRes.data.name || "User");
         }
 
         const payload = { sellerId, buyerId };
         if (productId) payload.productId = productId;
 
-        const convoRes = await api.post("/conversations", payload);
+        const convoRes = await api.post("/api/conversations", payload);
         const generatedRoomId = convoRes.data.roomId;
 
         setRoomId(generatedRoomId);
@@ -78,7 +78,8 @@ export default function UnifiedChatPopupSeller({
     if (!roomId) return;
 
     socket.emit("join-room", roomId);
-console.log("📥 Seller joined room:", roomId);
+    console.log("📥 Seller joined room:", roomId);
+
     const handleMessage = (msg) => {
       console.log("📥 Seller received:", msg);
       setMessages((prev) => [...prev, msg]);
@@ -90,7 +91,7 @@ console.log("📥 Seller joined room:", roomId);
 
   useEffect(() => {
     if (!roomId) return;
-    api.get(`/messages/${roomId}`).then((res) => setMessages(res.data));
+    api.get(`/api/messages/${roomId}`).then((res) => setMessages(res.data));
   }, [roomId]);
 
   useEffect(() => {
@@ -109,7 +110,7 @@ console.log("📥 Seller joined room:", roomId);
 
     try {
       socket.emit("send-message", msg);
-      setMessages((prev) => [...prev, msg]); // ✅ Show instantly
+      setMessages((prev) => [...prev, msg]);
       setInput("");
     } catch (err) {
       console.error("❌ Failed to send message:", err);
@@ -127,7 +128,7 @@ console.log("📥 Seller joined room:", roomId);
     formData.append("time", new Date().toLocaleTimeString());
 
     try {
-      const res = await api.post("/messages/media", formData);
+      const res = await api.post("/api/messages/media", formData);
       const mediaMsg = res.data;
       setMessages((prev) => [...prev, mediaMsg]);
     } catch (err) {

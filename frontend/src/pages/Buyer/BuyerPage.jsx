@@ -1,3 +1,5 @@
+// E:\LocalMarketPlace\frontend\src\pages\Buyer\BuyerPage.jsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../HomeScreen/Navbar";
@@ -27,7 +29,8 @@ export default function BuyerPage() {
   }, [navigate]);
 
   useEffect(() => {
-    api.get("/products")
+    api
+      .get("/api/products") // ✅ updated
       .then((res) => setProducts(res.data))
       .catch((err) => console.error("Failed to load products", err));
   }, []);
@@ -40,7 +43,7 @@ export default function BuyerPage() {
   const loadCart = async () => {
     if (!userId) return;
     try {
-      const res = await api.get(`/cart/${userId}`);
+      const res = await api.get(`/api/cart/${userId}`); // ✅ updated
       setCartCount(Array.isArray(res.data) ? res.data.length : 0);
     } catch (err) {
       console.error("Failed to load cart", err);
@@ -51,7 +54,7 @@ export default function BuyerPage() {
   const loadWishlist = async () => {
     if (!userId) return;
     try {
-      const res = await api.get(`/wishlist/${userId}`);
+      const res = await api.get(`/api/wishlist/${userId}`); // ✅ updated
       setWishlist(res.data);
     } catch (err) {
       console.error("Failed to load wishlist", err);
@@ -66,7 +69,8 @@ export default function BuyerPage() {
     }
 
     try {
-      const res = await api.post(`/cart/${userId}`, {
+      const res = await api.post(`/api/cart/${userId}`, {
+        // ✅ updated
         product,
         qty: 1,
       });
@@ -107,10 +111,10 @@ export default function BuyerPage() {
     const exists = wishlist.find((w) => w._id === product._id);
 
     if (exists) {
-      await api.delete(`/wishlist/${userId}/${product._id}`);
+      await api.delete(`/api/wishlist/${userId}/${product._id}`); // ✅ updated
       setWishlist(wishlist.filter((w) => w._id !== product._id));
     } else {
-      const res = await api.post(`/wishlist/${userId}`, product);
+      const res = await api.post(`/api/wishlist/${userId}`, product); // ✅ updated
       if (!res.data || res.status !== 200) {
         alert("Failed to add to wishlist");
         return;
@@ -119,12 +123,16 @@ export default function BuyerPage() {
     }
   };
 
-  const isInWishlist = (productId) => wishlist.some((w) => w._id === productId);
+  const isInWishlist = (productId) =>
+    wishlist.some((w) => w._id === productId);
 
   const filtered = products.filter((p) => {
     if (!query) return true;
     const q = query.trim().toLowerCase();
-    return (p.name || "").toLowerCase().includes(q) || (p.category || "").toLowerCase().includes(q);
+    return (
+      (p.name || "").toLowerCase().includes(q) ||
+      (p.category || "").toLowerCase().includes(q)
+    );
   });
 
   return (
@@ -173,8 +181,16 @@ export default function BuyerPage() {
                     <button
                       className={`wish-icon ${isInWishlist(p._id) ? "active" : ""}`}
                       onClick={() => toggleWishlist(p)}
-                      aria-label={isInWishlist(p._id) ? "Remove from wishlist" : "Add to wishlist"}
-                      title={isInWishlist(p._id) ? "Remove from wishlist" : "Add to wishlist"}
+                      aria-label={
+                        isInWishlist(p._id)
+                          ? "Remove from wishlist"
+                          : "Add to wishlist"
+                      }
+                      title={
+                        isInWishlist(p._id)
+                          ? "Remove from wishlist"
+                          : "Add to wishlist"
+                      }
                     >
                       {isInWishlist(p._id) ? "♥" : "♡"}
                     </button>
@@ -183,11 +199,15 @@ export default function BuyerPage() {
                   <div className="product-bottom">
                     <div className="info-left">
                       <div className="prod-name">{p.name}</div>
-                      <div className="prod-price">₹{Number(p.price || 0).toFixed(2)}</div>
+                      <div className="prod-price">
+                        ₹{Number(p.price || 0).toFixed(2)}
+                      </div>
                     </div>
 
                     <div className="info-right">
-                      <button className="btn-add" onClick={() => addToCart(p)}>Add</button>
+                      <button className="btn-add" onClick={() => addToCart(p)}>
+                        Add
+                      </button>
                       <button
                         className="btn-chat"
                         onClick={() =>

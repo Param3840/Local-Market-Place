@@ -1,7 +1,9 @@
+// E:\LocalMarketPlace\frontend\src\pages\Seller\SellerProfile.jsx
+
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../HomeScreen/Navbar";
-import UnifiedChatPopupSeller from "../../components/UnifiedChatPopupSeller"; // ✅ Chat popup
+import UnifiedChatPopupSeller from "../../components/UnifiedChatPopupSeller";
 import "./SellerProfile.css";
 import bg from "../../assets/bg.png";
 import { storage } from "../../utils/storage";
@@ -34,7 +36,7 @@ export default function SellerProfile() {
 
     async function fetchProfile() {
       try {
-        const res = await api.get(`/seller/${userId}`);
+        const res = await api.get(`/api/seller/${userId}`); // ✅ updated
         const storedImage = storage.getItem(IMAGE_KEY);
         const fullProfile = {
           ...res.data,
@@ -106,7 +108,6 @@ export default function SellerProfile() {
       <Navbar
         links={[
           { label: "Home", href: "/seller/page" },
-         
           {
             label: "Messages",
             href: "#",
@@ -157,7 +158,9 @@ export default function SellerProfile() {
             </div>
 
             <div className="profile-right">
-              <button className="logout-btn" onClick={handleLogout}>🚪 Logout</button>
+              <button className="logout-btn" onClick={handleLogout}>
+                🚪 Logout
+              </button>
             </div>
           </div>
         </div>

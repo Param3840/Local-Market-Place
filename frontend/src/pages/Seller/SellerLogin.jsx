@@ -1,3 +1,5 @@
+// E:\LocalMarketPlace\frontend\src\pages\Seller\SellerLogin.jsx
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../HomeScreen/Navbar";
@@ -19,7 +21,8 @@ export default function SellerLogin() {
       setLoading(true);
       setError("");
 
-      const res = await api.post("/auth/login", {
+      // ✅ Updated endpoint to include /api prefix
+      const res = await api.post("/api/auth/login", {
         email: email.trim(),
         password,
         role: "seller",

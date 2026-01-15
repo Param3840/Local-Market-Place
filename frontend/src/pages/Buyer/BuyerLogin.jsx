@@ -21,14 +21,15 @@ export default function BuyerLogin() {
       setLoading(true);
       setError("");
 
-      const res = await api.post("/auth/login", {
+      // ✅ FIXED: Correct API endpoint
+      const res = await api.post("/api/auth/login", {
         email: email.trim(),
         password,
         role: "buyer",
       });
 
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user_type", res.data.role); // ✅ consistent key
+      localStorage.setItem("user_type", res.data.role);
       localStorage.setItem("user_id", res.data.user.id);
 
       console.log("✅ Login successful:", {

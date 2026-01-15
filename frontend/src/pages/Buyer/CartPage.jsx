@@ -1,3 +1,5 @@
+// E:\LocalMarketPlace\frontend\src\pages\Buyer\CartPage.jsx
+
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../HomeScreen/Navbar";
@@ -20,7 +22,7 @@ export default function CartPage() {
 
   const loadCart = async () => {
     try {
-      const res = await api.get(`/cart/${userId}`);
+      const res = await api.get(`/api/cart/${userId}`); // ✅ updated
       setCart(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error("Cart load error", err);
@@ -35,7 +37,8 @@ export default function CartPage() {
     const newQty = Math.max(1, (item.qty || 1) + delta);
 
     try {
-      const res = await api.put(`/cart/${userId}/${productId}`, {
+      const res = await api.put(`/api/cart/${userId}/${productId}`, {
+        // ✅ updated
         qty: newQty,
       });
 
@@ -51,7 +54,7 @@ export default function CartPage() {
 
   const removeItem = async (productId) => {
     try {
-      await api.delete(`/cart/${userId}/${productId}`);
+      await api.delete(`/api/cart/${userId}/${productId}`); // ✅ updated
       const next = cart.filter((it) => it.product?._id !== productId);
       setCart(next);
     } catch (err) {
@@ -62,7 +65,7 @@ export default function CartPage() {
   const clearCart = async () => {
     if (!confirm("Clear cart?")) return;
     try {
-      await api.delete(`/cart/${userId}`);
+      await api.delete(`/api/cart/${userId}`); // ✅ updated
       setCart([]);
     } catch (err) {
       console.error("Clear cart error", err);
@@ -71,7 +74,8 @@ export default function CartPage() {
 
   const addToCartAgain = async (item) => {
     try {
-      const res = await api.post(`/cart/${userId}`, {
+      const res = await api.post(`/api/cart/${userId}`, {
+        // ✅ updated
         product: item.product,
         qty: 1,
       });
@@ -84,7 +88,7 @@ export default function CartPage() {
 
   const subtotal = useMemo(() => {
     return cart.reduce(
-      (s, it) => s + (Number(it.product?.price || 0) * (it.qty || 1)),
+      (s, it) => s + Number(it.product?.price || 0) * (it.qty || 1),
       0
     );
   }, [cart]);
@@ -146,14 +150,28 @@ export default function CartPage() {
 
                       <div className="item-actions">
                         <div className="qty-control">
-                          <button onClick={() => changeQty(it.product._id, -1)}>−</button>
+                          <button onClick={() => changeQty(it.product._id, -1)}>
+                            −
+                          </button>
                           <span>{it.qty || 1}</span>
-                          <button onClick={() => changeQty(it.product._id, +1)}>+</button>
+                          <button onClick={() => changeQty(it.product._id, +1)}>
+                            +
+                          </button>
                         </div>
 
                         <div style={{ display: "flex", gap: 8 }}>
-                          <button className="btn small" onClick={() => removeItem(it.product._id)}>Remove</button>
-                          <button className="btn outline small" onClick={() => addToCartAgain(it)}>Duplicate</button>
+                          <button
+                            className="btn small"
+                            onClick={() => removeItem(it.product._id)}
+                          >
+                            Remove
+                          </button>
+                          <button
+                            className="btn outline small"
+                            onClick={() => addToCartAgain(it)}
+                          >
+                            Duplicate
+                          </button>
                           <button
                             className="btn-chat"
                             onClick={() =>
@@ -185,8 +203,15 @@ export default function CartPage() {
                 </div>
 
                 <div className="summary-actions">
-                  <button className="btn danger" onClick={clearCart}>Clear Cart</button>
-                  <button className="btn primary" onClick={() => alert("Proceed to checkout (demo)")}>Proceed to Checkout</button>
+                  <button className="btn danger" onClick={clearCart}>
+                    Clear Cart
+                  </button>
+                  <button
+                    className="btn primary"
+                    onClick={() => alert("Proceed to checkout (demo)")}
+                  >
+                    Proceed to Checkout
+                  </button>
                 </div>
 
                 <div className="note">

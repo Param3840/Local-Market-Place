@@ -1,3 +1,5 @@
+// E:\LocalMarketPlace\frontend\src\pages\Seller\AddProductModal.jsx
+
 import { useEffect, useRef, useState } from "react";
 import api from "../../api"; // ✅ centralized API
 import "./SellerPage.css";
@@ -62,7 +64,7 @@ export default function AddProductModal({ onClose, onAdd }) {
     console.log("📦 Sending payload:", payload);
 
     try {
-      const res = await api.post("/products/add", payload);
+      const res = await api.post("/api/products/add", payload); // ✅ updated
       if (res.status === 200 || res.status === 201) {
         onAdd(res.data);
         onClose();

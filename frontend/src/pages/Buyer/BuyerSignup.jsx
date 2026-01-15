@@ -1,9 +1,11 @@
+// E:\LocalMarketPlace\frontend\src\pages\Buyer\BuyerSignup.jsx
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../HomeScreen/Navbar";
 import "./BuyerSignup.css";
 import bg from "../../assets/bg.png";
-import axios from "axios";
+import api from "../../api"; // ✅ use centralized API instance
 
 export default function BuyerSignup() {
   const navigate = useNavigate();
@@ -26,7 +28,8 @@ export default function BuyerSignup() {
       setLoading(true);
       setError("");
 
-      const res = await axios.post("http://localhost:5000/api/auth/signup", {
+      // ✅ Updated to use /api/auth/signup and centralized api instance
+      const res = await api.post("/api/auth/signup", {
         name: name.trim(),
         email: email.trim(),
         password,

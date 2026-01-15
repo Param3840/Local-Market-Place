@@ -1,7 +1,9 @@
+// E:\LocalMarketPlace\frontend\src\pages\Buyer\BuyerChatPage.jsx
+
 import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import socket from "../../utils/socket";
-import axios from "axios";
+import api from "../../api"; // ✅ Use api instance instead of raw axios
 
 export default function BuyerChatPage() {
   const location = useLocation();
@@ -31,15 +33,15 @@ export default function BuyerChatPage() {
   useEffect(() => {
     async function setupChat() {
       try {
-        const productRes = await axios.get(`/api/products/${productId}`);
-        const sellerRes = await axios.get(`/api/users/${sellerId}`);
+        const productRes = await api.get(`/api/products/${productId}`);
+        const sellerRes = await api.get(`/api/users/${sellerId}`);
         setProductName(productRes.data.name || "Product");
         setSellerName(sellerRes.data.name || "Seller");
 
         const payload = { buyerId, sellerId };
         if (productId) payload.productId = productId;
 
-        const convoRes = await axios.post("/api/conversations", payload);
+        const convoRes = await api.post("/api/conversations", payload);
         const room = convoRes.data.roomId;
         console.log("🧩 Room ID:", room);
         setRoomId(room);
@@ -68,9 +70,12 @@ export default function BuyerChatPage() {
   useEffect(() => {
     if (!roomId) return;
 
-    axios.get(`/api/messages/${roomId}`)
+    api
+      .get(`/api/messages/${roomId}`)
       .then((res) => setMessages(res.data))
-      .catch((err) => console.error("❌ Failed to load messages:", err.message));
+      .catch((err) =>
+        console.error("❌ Failed to load messages:", err.message)
+      );
   }, [roomId]);
 
   // Auto-scroll
@@ -94,8 +99,21 @@ export default function BuyerChatPage() {
   };
 
   return (
-    <div style={{ height: "100vh", background: "#f9f9f9", display: "flex", flexDirection: "column" }}>
-      <div style={{ padding: "1rem", borderBottom: "1px solid #ccc", background: "#fff" }}>
+    <div
+      style={{
+        height: "100vh",
+        background: "#f9f9f9",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div
+        style={{
+          padding: "1rem",
+          borderBottom: "1px solid #ccc",
+          background: "#fff",
+        }}
+      >
         <h3>{productName}</h3>
         <p>with {sellerName}</p>
       </div>
@@ -119,13 +137,28 @@ export default function BuyerChatPage() {
             >
               {msg.text}
             </div>
-            <div style={{ fontSize: "0.75rem", color: "#888", marginTop: "4px" }}>{msg.time}</div>
+            <div
+              style={{
+                fontSize: "0.75rem",
+                color: "#888",
+                marginTop: "4px",
+              }}
+            >
+              {msg.time}
+            </div>
           </div>
         ))}
         <div ref={chatEndRef} />
       </div>
 
-      <div style={{ display: "flex", padding: "1rem", borderTop: "1px solid #ccc", background: "#fff" }}>
+      <div
+        style={{
+          display: "flex",
+          padding: "1rem",
+          borderTop: "1px solid #ccc",
+          background: "#fff",
+        }}
+      >
         <input
           type="text"
           value={input}

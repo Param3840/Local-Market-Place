@@ -1,3 +1,5 @@
+// E:\LocalMarketPlace\frontend\src\pages\Seller\SellerPage.jsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../HomeScreen/Navbar";
@@ -24,8 +26,8 @@ export default function SellerPage() {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
-  const [soldProducts, setSoldProducts] = useState([]); // ✅ Track sold items
-  const [totalSales, setTotalSales] = useState(0); // ✅ Dynamic sales count
+  const [soldProducts, setSoldProducts] = useState([]);
+  const [totalSales, setTotalSales] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedChat, setSelectedChat] = useState(null);
   const [showChatList, setShowChatList] = useState(false);
@@ -45,7 +47,7 @@ export default function SellerPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await api.get("/products");
+        const res = await api.get("/api/products"); // ✅ updated
         setProducts(res.data);
       } catch (err) {
         console.error("Failed to fetch products", err);
@@ -85,7 +87,7 @@ export default function SellerPage() {
     if (!window.confirm("Delete this product?")) return;
 
     try {
-      await api.delete(`/products/${id}`);
+      await api.delete(`/api/products/${id}`); // ✅ updated
       setProducts((prev) => prev.filter((p) => p._id !== id));
     } catch (err) {
       console.error("Failed to delete product", err);

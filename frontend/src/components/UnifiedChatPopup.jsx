@@ -1,3 +1,5 @@
+// E:\LocalMarketPlace\frontend\src\components\UnifiedChatPopup.jsx
+
 import { useEffect, useState, useRef } from "react";
 import api from "../api";
 import socket from "../utils/socket";
@@ -25,7 +27,7 @@ export default function UnifiedChatPopup({
 
   useEffect(() => {
     if (!selectedChat && showChatList) {
-      api.get(`/conversations/buyer/${buyerId}`).then((res) => {
+      api.get(`/api/conversations/buyer/${buyerId}`).then((res) => {
         setConversations(res.data);
       });
     }
@@ -44,21 +46,21 @@ export default function UnifiedChatPopup({
     async function setupChat() {
       try {
         if (productId) {
-          const productRes = await api.get(`/products/${productId}`);
+          const productRes = await api.get(`/api/products/${productId}`);
           setProductName(productRes.data.name || "Product");
         } else {
           setProductName("General Chat");
         }
 
         if (sellerId) {
-          const userRes = await api.get(`/users/${sellerId}`);
+          const userRes = await api.get(`/api/users/${sellerId}`);
           setUserName(userRes.data.name || "User");
         }
 
         const payload = { buyerId, sellerId };
         if (productId) payload.productId = productId;
 
-        const convoRes = await api.post("/conversations", payload);
+        const convoRes = await api.post("/api/conversations", payload);
         const generatedRoomId = convoRes.data.roomId;
 
         setRoomId(generatedRoomId);
@@ -90,7 +92,7 @@ export default function UnifiedChatPopup({
 
   useEffect(() => {
     if (!roomId) return;
-    api.get(`/messages/${roomId}`).then((res) => setMessages(res.data));
+    api.get(`/api/messages/${roomId}`).then((res) => setMessages(res.data));
   }, [roomId]);
 
   useEffect(() => {
@@ -109,7 +111,7 @@ export default function UnifiedChatPopup({
 
     try {
       socket.emit("send-message", msg);
-      setMessages((prev) => [...prev, msg]); // ✅ Show instantly
+      setMessages((prev) => [...prev, msg]);
       setInput("");
     } catch (err) {
       console.error("❌ Failed to send message:", err);
@@ -127,7 +129,7 @@ export default function UnifiedChatPopup({
     formData.append("time", new Date().toLocaleTimeString());
 
     try {
-      const res = await api.post("/messages/media", formData);
+      const res = await api.post("/api/messages/media", formData);
       const mediaMsg = res.data;
       setMessages((prev) => [...prev, mediaMsg]);
     } catch (err) {

@@ -1,9 +1,11 @@
+// E:\LocalMarketPlace\frontend\src\pages\Seller\SellerSignup.jsx
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../HomeScreen/Navbar";
 import "./SellerSignup.css";
 import bg from "../../assets/bg.png";
-import axios from "axios";
+import api from "../../api";
 
 export default function SellerSignup() {
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ export default function SellerSignup() {
       setLoading(true);
       setError("");
 
-      await axios.post("http://localhost:5000/api/auth/signup", {
+      await api.post("/api/auth/signup", {
         name: name.trim(),
         email: email.trim(),
         password,

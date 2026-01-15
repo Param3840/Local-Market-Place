@@ -1,6 +1,8 @@
+// E:\LocalMarketPlace\frontend\src\pages\MessageCenter.jsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api"; // ✅ centralized API instance
 
 export default function MessageCenter() {
   const [conversations, setConversations] = useState([]);
@@ -8,12 +10,12 @@ export default function MessageCenter() {
   const navigate = useNavigate();
 
   const userId = localStorage.getItem("user_id");
-  const userRole = localStorage.getItem("role"); // 'buyer' or 'seller'
+  const userRole = localStorage.getItem("user_type"); // ✅ corrected key from 'role' to 'user_type'
 
   useEffect(() => {
     async function fetchConversations() {
       try {
-        const res = await axios.get(`/api/conversations/${userId}`);
+        const res = await api.get(`/api/conversations/${userId}`); // ✅ updated to use api instance
         setConversations(res.data);
       } catch (err) {
         console.error("Failed to load conversations", err);
@@ -22,7 +24,11 @@ export default function MessageCenter() {
       }
     }
 
-    fetchConversations();
+    if (userId) {
+      fetchConversations();
+    } else {
+      setLoading(false);
+    }
   }, [userId]);
 
   const handleOpenChat = (conv) => {

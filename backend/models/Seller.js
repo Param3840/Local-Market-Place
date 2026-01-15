@@ -24,7 +24,7 @@ const sellerSchema = new mongoose.Schema(
     },
     shopName: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       minlength: 2,
       maxlength: 100,
@@ -35,7 +35,7 @@ const sellerSchema = new mongoose.Schema(
       trim: true,
     },
     image: {
-      type: String, // base64 or URL
+      type: String,
       default: null,
     },
   },

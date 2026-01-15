@@ -1,3 +1,5 @@
+// E:\LocalMarketPlace\frontend\src\pages\Buyer\BuyerProfile.jsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../HomeScreen/Navbar";
@@ -30,7 +32,7 @@ export default function BuyerProfile() {
     if (!userId || role !== "buyer") return;
 
     api
-      .get(`/buyer/${userId}`)
+      .get(`/api/buyer/${userId}`) // ✅ updated
       .then((res) => {
         const storedImage = localStorage.getItem(IMAGE_KEY);
         const fullProfile = { ...res.data, image: storedImage || null };

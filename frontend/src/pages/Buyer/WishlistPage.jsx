@@ -1,3 +1,5 @@
+// E:\LocalMarketPlace\frontend\src\pages\Buyer\WishlistPage.jsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../HomeScreen/Navbar";
@@ -16,7 +18,7 @@ export default function WishlistPage() {
   useEffect(() => {
     if (!userId) return;
     api
-      .get(`/wishlist/${userId}`)
+      .get(`/api/wishlist/${userId}`) // ✅ updated
       .then((res) => {
         console.log("✅ Wishlist loaded:", res.data);
         setWishlist(res.data);
@@ -31,7 +33,8 @@ export default function WishlistPage() {
     }
 
     try {
-      const res = await api.post(`/cart/${userId}`, {
+      const res = await api.post(`/api/cart/${userId}`, {
+        // ✅ updated
         product,
         qty: 1,
       });
@@ -63,7 +66,7 @@ export default function WishlistPage() {
 
   const remove = async (_id) => {
     try {
-      await api.delete(`/wishlist/${userId}/${_id}`);
+      await api.delete(`/api/wishlist/${userId}/${_id}`); // ✅ updated
       const next = wishlist.filter((p) => p._id !== _id);
       setWishlist(next);
     } catch (err) {

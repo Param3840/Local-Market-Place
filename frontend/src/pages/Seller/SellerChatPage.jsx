@@ -1,3 +1,5 @@
+// E:\LocalMarketPlace\frontend\src\pages\Seller\SellerChatPage.jsx
+
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import UnifiedChatPopupSeller from "../../components/UnifiedChatPopupSeller";
@@ -34,7 +36,7 @@ export default function SellerChatPage() {
 
   return (
     <div>
-      {selectedChat && (
+      {selectedChat ? (
         <UnifiedChatPopupSeller
           sellerId={sellerId}
           selectedChat={selectedChat}
@@ -42,6 +44,8 @@ export default function SellerChatPage() {
           showChatList={false}
           onClose={() => navigate("/seller/page")}
         />
+      ) : (
+        <p style={{ padding: "2rem", textAlign: "center" }}>Loading chat...</p>
       )}
     </div>
   );
