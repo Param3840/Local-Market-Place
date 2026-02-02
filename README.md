@@ -6,9 +6,11 @@ Welcome to **Local Market Place** — a full-stack web application that connects
 
 ## 🚀 Live Deployments
 
+| Layer     | Platform |
+|-----------|----------|
+| 🌐 Frontend | Vercel   |
+| 🔧 Backend  | Render   |
 
- 🌐 Frontend ->  Vercel \\
- 🔧 Backend ->  Render 
 
 ---
 
