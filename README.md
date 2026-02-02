@@ -8,8 +8,8 @@ Welcome to **Local Market Place** — a full-stack web application that connects
 
 | Layer     | URL                                                                 |
 |-----------|----------------------------------------------------------------------|
-| 🌐 Frontend | [local-market-place-ten.vercel.app](https://local-market-place-ten.vercel.app) |
-| 🔧 Backend  | [local-market-place.onrender.com](https://local-market-place.onrender.com)       |
+| 🌐 Frontend | Versel |
+| 🔧 Backend  | Render |
 
 ---
 
